@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery(제이쿼리)</title>
+    <style>
+        div#displayArea {
+            width: 200px;
+            height: 200px;
+            border: 5px double #6699FF;
+        }
+    </style>
+</head>
+<body>
+    <h1>제이쿼리를 이용한 태그제어(p468)</h1>
+    <!-- 3. p469 HTML을 보면서 작성-->
+    <div id="displayArea">이곳의 내용을 변경</div>
+    <button type="button">표시</button>
+
+    <!-- 1. jQuery 연결 -->
+    <script src="lib/jquery-3.6.1.js"></script>
+
+    <!-- 2. jQuery 시작 형식 -->
+    <script>
+        //1. 기본형식 : 길다
+        /*
+        $(document).ready(function(){
+            // 표현식 --> p469
+        });
+        */
+        //2. 단축형식 : 짧다 ★
+        /*
+        $(function(){
+            // 표현식
+        });
+        */
+        $(function(){
+            // '표시' 버튼 클릭 시 div#displayArea에 이미지를 출력
+            $('button').click(function(){
+                $("div#displayArea")
+                .html("<img src='https://picsum.photos/200', alt='그림'/>");
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery(제이쿼리)</title>
+    <style>
+        div#displayArea {
+            width: 200px;
+            height: 200px;
+            border: 5px double #6699FF;
+        }
+    </style>
+</head>
+<body>
+    <h1>자바스크립트를 이용한 태그제어(p468)</h1>
+    <!-- 3. p469 HTML을 보면서 작성-->
+    <div id="displayArea">이곳의 내용을 변경</div>
+    <button type="button">표시</button>
+
+    <script>
+        // 표시 버튼을 누르면, #displayArea에 이미지를 출려한다.
+        // $ : jQuery에서 DOM 요소를 선택하는 기호
+        // (대신 jQuery라는 식별자 사용 가능)
+        const Button = document.querySelector("button"); //$("button")
+        Button.addEventListener("click",function(){
+            const displayArea = document.querySelector("#displayArea");
+            displayArea.innerHTML = "<img src='https://picsum.photos/200', alt='그림'/>";
+        });
+    </script>
+</body>
+</html>
