@@ -5,3 +5,5 @@
 * javascript 개요
 * javascript variables
 * javascript literals
+* javascript operators
+* jquery library v3.6.1
