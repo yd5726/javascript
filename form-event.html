@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>폼 이벤트</h1>
+    <p>폼 이벤트는 input, select, textarea 등의 폼 엘리먼트가</p>
+
+    <h2>폼 이벤트 종류</h2>
+    <ul>
+        <li>submit : 폼 전송시 발생</li>
+        <li>change : 폼 엘리먼트가 변경되면 발생</li>
+        <li>focus : 폼 엘리먼트가 포커스가 위치되면 발생(tab, click)</li>
+        <li>blur : 폼 엘리먼트가 포커스를 잃으면 발생</li>
+    </ul>
+    <h3>폼 이벤트 예제(p486)</h3>
+    <form id="my-form" name="my-form" autocomplete="off">
+        <label for="idx">아이디</label>
+        <input type="text" id="idx" name="idx"><br>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name"><br>
+        <input type="submit" value="전송">
+    </form>
+
+    <script>
+        /*
+        //js
+        const myForm = document.querySelector("#my-form");
+        const submit = document.querySelector("#sendBt");
+        myForm.addEventListener("submit",function(e){
+            e.preventDefault();
+            console.log("submit 이벤트 금지");
+        });
+        */
+
+        //jq 
+        $(function(){
+            // 전송시 form  새로고침 : default -> forbidden
+            // 사용자 정보 객체 -> 서버로 전송할 데이터!
+            const userInfo ={};
+            $("#my-form").submit(function(e){
+                // form 전송시 새로고침 이벤트 처리를 취소!
+                e.preventDefault();
+                userInfo.id = $("#id").val();
+                userInfo.name = $("#name").val();
+                $("#idx").val(" ");
+                $("#name").val(null);
+            });
+            
+            // 엘리먼트에 포커스를 받으면 처리
+            $("input").focus(function(){
+                console.log("focus 발생");
+                $(this).css("background-color","cccccc");
+            });
+
+            $("input").blur(function(){
+                console.log("blur 발생");
+                $(this).css("background-color","ffffff");
+            });
+        })
+    </script>
+</body>
+</html>
