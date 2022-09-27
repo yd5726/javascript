@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery scroll event example</title>
+    <style>
+        html{
+            font-size: 20px;
+            scroll-behavior: smooth;
+        }
+        .contents{
+            max-width: 90%;
+            margin: 0 auto;
+            display: flex;
+        }
+        #gnb{
+            position: fixed;
+            top: 5rem; /*20 x 5 = 100px*/
+            right: 1rem;
+        }
+        .left{
+            flex: 8;
+            /*
+            flex-grow: 8; // 확대
+            flex-shrink: 8; // 축소
+            flex-basis: auto; // 기본크기
+            */
+        }
+        .right{
+            flex: 2;
+        }
+        h1{
+            margin: 0 0 5rem 0;
+        }
+        p{
+            height: 300px;
+            background-color: greenyellow;
+        }
+        .pink{
+            background-color: pink;
+        }
+    </style>
+    <script src="lib/jquery-3.6.1.js"></script>
+</head>
+<body>
+    <div class="contents">
+        <div class="left">
+            <h1>sample document</h1>
+            <h2>subject 1.</h2>
+            <p class="subject1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo mollitia nulla eveniet labore magnam enim praesentium inventore, sit voluptatem aliquam reiciendis sunt soluta minus quis neque beatae optio doloribus illo.</p>
+            <h2>subject 2.</h2>
+            <p class="subject2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo mollitia nulla eveniet labore magnam enim praesentium inventore, sit voluptatem aliquam reiciendis sunt soluta minus quis neque beatae optio doloribus illo.</p>
+            <h2>subject 3.</h2>
+            <p class="subject3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo mollitia nulla eveniet labore magnam enim praesentium inventore, sit voluptatem aliquam reiciendis sunt soluta minus quis neque beatae optio doloribus illo.</p>
+            <h2>subject 4.</h2>
+            <p class="subject4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo mollitia nulla eveniet labore magnam enim praesentium inventore, sit voluptatem aliquam reiciendis sunt soluta minus quis neque beatae optio doloribus illo.</p>
+            <h2>subject 5.</h2>
+            <p class="subject5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo mollitia nulla eveniet labore magnam enim praesentium inventore, sit voluptatem aliquam reiciendis sunt soluta minus quis neque beatae optio doloribus illo.</p>
+            <footer>footer content <a href="#">ceo</a></footer>
+        </div>
+        <div class="right">
+            <ul id="gnb">
+                <li><a href="#">subject1</a></li>
+                <li><a href="#">subject2</a></li>
+                <li><a href="#">subject3</a></li>
+                <li><a href="#">subject4</a></li>
+                <li><a href="#">subject5</a></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            // 0. 변수 선언
+            let scTop;
+            const sub1Top = parseInt($(".subject1").offset().top);
+            const sub2Top = parseInt($(".subject2").offset().top);
+            const sub3Top = parseInt($(".subject3").offset().top);
+            const sub4Top = parseInt($(".subject4").offset().top);
+            const sub5Top = parseInt($(".subject5").offset().top);
+            const pOffset = [225,615,1005,1395,1784];
+            //1. 스크롤이 시작되면 감지
+            $(window).scroll(function(){
+            // 조건비교
+            // 만약 현재 스크롤Top이 subject1~5까지 옵센Top 보다 크면,
+            // (=해당 컨텐츠에 도달하면) 내비게이션에 pink 클래스를 적용한다.
+                scTop = $(window).scrollTop(); //소수점
+                console.log("스크롤Top : " + parseInt(scTop));
+                if(scTop > sub1Top && scTop <(sub1Top+300)){
+                    $("#gnb li").removeClass("pink");
+                    $("#gnb li:nth-child(1)").addClass("pink");
+                }else if(scTop > sub2Top  && scTop <(sub2Top+300)){
+                    $("#gnb li").removeClass("pink");
+                    $("#gnb li:nth-child(2)").addClass("pink");
+                }else if(scTop > sub3Top  && scTop <(sub3Top+300)){
+                    $("#gnb li").removeClass("pink");
+                    $("#gnb li:nth-child(3)").addClass("pink");
+                }else if(scTop > sub4Top  && scTop <(sub4Top+300)){
+                    $("#gnb li").removeClass("pink");
+                    $("#gnb li:nth-child(4)").addClass("pink");
+                }else if(scTop > sub5Top  && scTop <(sub5Top+300)){
+                    $("#gnb li").removeClass("pink");
+                    $("#gnb li:nth-child(5)").addClass("pink");
+                }
+            })
+
+            // .push() : 맨 뒤 추가
+            // .pop() : 맨 뒤 제거
+            // .shift() : 맨 앞 추가
+            // .unshift() : 맨 앞 제거
+            // .length : 전체 배열원소 길이(갯수)
+            $("#gnb li").click(function(e){
+                e.preventDefault(); // 기본 이벤트 전파를 금지(cancel)
+                                    // 안하면 항상 a는 (기본) 이벤트를 갖음
+                //$(window).scrollTop(615);
+                let el = $(this);   //#gnb li a : 여러 개
+                let index = el.index(); // 반복가능 객체에서 인덱스를 알려주는 메소드
+                console.log(index);
+                $(window).scrollTop(pOffset[index]-50);
+            })
+        });
+    </script>
+</body>
+</html>

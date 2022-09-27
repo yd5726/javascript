@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도큐먼트/윈도우 이벤트</title>
+    <script src="lib/jquery-3.6.1.js"></script>
+    <style>
+        body{
+            height: 5000px;
+        }
+        .fixed{
+            background-color: "gold";
+            position: "fixed";
+            top: 0;
+            width: "100%";
+        }
+    </style>
+</head>
+<body>
+    <h1>window, document 이벤트(p488)</h1>
+    <p>도큐먼트/윈도우 이벤트는 웹 페이지의 로드가 발생되거나 완료되는
+        경우 또는 웹브라우저 창의 크기가 변경되거나 스크롤이 이동될 때 발생하며,
+        이들의 이벤트는 다음과 같다.
+    </p>
+    <h2>이벤트 종류</h2>
+    <ul class="fixed">
+        <li>ready : 페이지의 로드가 완료되면 발생</li>
+        <li>load : 페이지가 로드되면 발생</li>
+        <li>resize : 창의 크기를 변경하면 발생</li>
+        <li>scroll : 웹브라우너 창의 스크롤을 이동하면 발생</li>
+        <li>unload : 페이지가 언로드 되면 발생</li>
+    </ul>
+    <div id="result"></div>
+    <script>
+        /* ready, load event */
+        // .html(), .text(), .val() : HTML을 읽거나 쓸 때
+        // TEXT를 읽거나 쓸 때, (폼의)입력값
+        $(document).ready(function(){
+            $("#result").html("<img src='gplane.png' alt='airplane'>");
+        });
+
+        /* resize event */
+        // .css() vs .css(css-property)
+        // : css 속성값을 읽거나 css-property의 속성값을 조작할 때
+        $(window).resize(function(){
+            //alert("창의 크기를 조정했습니다.");
+            //console.log("스크린 가로 폭 : "+ $("body").width());
+            let bodyWidth = $("body").width(); //Number
+            if(bodyWidth < 700){
+                $("body").css("background-color","gold")
+            }else{
+                $("body").css("background-color","white")
+            }
+        })
+
+         /* scroll event */
+         $(window).scroll(function(){
+                //console.log("스크롤이 발생했습니다.");
+                // $(this) === window object
+
+                // get만
+                //console.log($(this).scrollTop());
+                let scTop = parseInt($(window).scrollTop());
+                let ulOffesetTop = $("ul").offset().top;
+                /*
+                if(scTop > ulOffesetTop){
+                    $("ul").css({
+                        backgroundColor: "gold",
+                        position: "fixed",
+                        top: 0,
+                        width: "100%"
+                    })
+                }else{
+                    $("ul").css({
+                        backgroundColor: "white",
+                        position: "static"
+                    })
+                }
+                */
+                if(scTop > ulOffesetTop){
+                    $("ul").addClass("fixed");
+                }else{
+                    $("ul").removeClass("fixed");
+                }
+            
+                // get & set
+                var p = $("p").first();
+                console.log("옵셋 값 : " + p.offset().top);
+            });
+            
+    </script>
+</body>
+</html>
