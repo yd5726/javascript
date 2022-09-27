@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>폼 이벤트</title>
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
     <h1>폼 이벤트</h1>
@@ -50,7 +51,7 @@
                 $("#idx").val(" ");
                 $("#name").val(null);
             });
-            
+            /*
             // 엘리먼트에 포커스를 받으면 처리
             $("input").focus(function(){
                 console.log("focus 발생");
@@ -60,6 +61,19 @@
             $("input").blur(function(){
                 console.log("blur 발생");
                 $(this).css("background-color","ffffff");
+            });
+            */
+            // change 이벤트 : 폼 엘리먼트가 변경될 때 발생(ex. 검색창 + 검색어!)
+            $("#idx").change(function(e){
+                //console.log("change 이벤트 발생!");
+                console.log("사용자 입력값 : " + e.target.value);
+            });
+            $("#name").keypress(function(e){
+                let inputValue = e.target.value;
+                if(inputValue.length > 10){
+                    alert("10자 이상 입력했습니다.");
+                }
+                console.log("사용자 입력값 : " + e.target.value);
             });
         })
     </script>
