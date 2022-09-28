@@ -5,6 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>제이쿼리 ajax (p 491)</title>
+    <script src="lib/jquery-3.6.1.js"></script>
+    <style>
+        .d-none{
+            display: none;
+        }
+        table, th, td{
+            border-collapse: collapse;
+        }
+        th, td{
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+    </style>
 </head>
 <body>
     <h1>jquery Ajax()</h1>
@@ -40,5 +53,89 @@
         <label for="keyword">키워드</label>
         <input type="text" id="keyword" name="keyword">
     </form>
+    <h5>.load() 예제(p493)</h5>
+    <button id="pro">요청</button>
+    <hr />
+    <div id="load" class="d-none">보이지 않는 곳</div>
+    <div id="result">실제 결과가 출력될 곳</div>
+    <script>
+        $(function(){
+            //$(엘리먼트).load(url [,data] [,complete(responseText, textStatus, XMLHttpRequest)]);
+            //요청 버튼을 클릭하면, #result에 TEXT, CSV, HTML, XML, JSON, [DB연동] 등의 데이터를 호출!
+            //p494
+            $("#pro").click(function(){
+                //$("#result").load("data/text-data.txt");
+                //$("#result").load("data/csv-data.csv");
+                //$("#result").load("data/html-data.html");
+                //$("#result").load("data/xml-data.xml");
+                $("#result").load("data/MOCK_DATA.json", function(responseText, textStatus, XMLHttpRequest){
+                //$("#result").load("data/dataset.xml", function(responseText, textStatus, XMLHttpRequest){
+                //$("#result").load("data/dataset111.xml", function(responseText, textStatus, XMLHttpRequest){
+                    //alert("데이터 전송이 완료되었습니다.");
+                    //console.log(responseText);
+                    //console.log(textStatus);
+                    //console.log(XMLHttpRequest);
+                    /*
+                    if(textStatus === "success"){
+                        alert("데이터 전송이 완료되었습니다.");
+                    }else{
+                        alert("통신실패! 확인바람~");
+                    }
+                    */
+                   // JSON : JavaScript Object Notion [자바스크립 객체 표기법(설명)]
+                   // Object to String : JSON.stringify() / 직렬화
+                   // String to Object : JSON.parse() / 역직렬화
+                   const data = JSON.parse(responseText);
+
+                   // 데이터셋[array index]["Object key"]
+                   //console.log(data);
+                   //console.log(data[0]);
+                   /*
+                   console.log(data[0]["id"]);
+                   console.log(data[0]["first_name"]);
+                   console.log(data[0]["last_name"]);
+                   console.log(data[0]["email"]);
+                   console.log(data[0]["gender"]);
+                   console.log(data[0]["ip_address"]);
+                    */
+                   /*javascript loop
+                     1) while(조건){반복; 증감식;}
+                     2) do() while(조건)
+                     3) for, for ~of, for ~in, nested for
+                   */
+                  let i = 0;
+                  /*
+                  while(i<1000){
+                    //console.log(data[i]["id"], data[i]["first_name"], data[i]["last_name"], data[i]["email"], data[i]["gender"], data[i]["ip_address"]);
+                    //console.log(data[i]["id"], data[i]["first_name"], data[i]["email"]);
+                    i++;
+                  }
+                  */
+                 let str ="<table id='member_list'>";
+                     str += "<tr><th>번호</th><th>이름</th><th>이메일</th><th>성별</th><th>접속ip</th>";
+                 for(i=0;i<data.length;i++){
+                    //console.log(data[i]["id"], data[i]["first_name"], data[i]["email"]);
+                    //let str ="<table id='member_list'>";
+                    let $id = data[i]["id"];
+                    let $name = data[i]["first_name"]+" "+data[i]["last_name"];
+                    let $email = data[i]["email"];
+                    let $gender = data[i]["gender"];
+                    let $ip = data[i]["ip_address"];
+                            
+                    str += "<tr>";
+                    str +="<td>"+$id+"</td>";
+                    str +="<td>"+$name+"</td>";
+                    str +="<td>"+$email+"</td>";
+                    str +="<td>"+$gender+"</td>";
+                    str +="<td>"+$ip+"</td>";
+                    str += "</tr>";
+                 }
+                 str += "</table>";
+                 //$(어딘가).html(str);
+                 $("#result").html(str);
+                });
+            })
+        })
+    </script>
 </body>
 </html>
