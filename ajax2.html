@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery ajax method - $.ajax()</title>
+    <script src="lib/jquery-3.6.1.js"></script>
+    <style>
+        #result{
+            border: 1px double #333;
+            padding: 1rem;
+            width: 20rem;
+            height: 20rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>$.ajax() 메소드 실습(p499)</h1>
+    <p>서버로 비동기 ajax 요청을 하며, 주로 로그인 처리/회원가입 처리/글쓰기 처리(=계시판, 블로그..)
+        등과 같이 DB와 연동 후 처리 결과만을 반환하는 경우엥 사용하면 좋다.
+    </p>
+    <p>$.get(), $.post() 메소드 대신 이 메소드 $.ajax()를 사용해서 Ajax를 구현할 수 있다.</p>
+    <p>참고로 jquery의 ajax통신은 jquery 고유의 방식이 아닌 ajax라는 javascript 통신방식을 의미하고,
+        이때 XMLHttpRequest라는 메소드를 이용해 처리를 손쉽게 대신해준다.
+    </p>
+
+    <h2>$.ajax() 메소드 형식</h2>
+    <code>$.ajax({type: value, url: value, data: value, success: function(data){...}})</code>
+    <ul>
+        <li>서버에 요청할 HTTP 방식(get or post) 지정</li>
+        <li>서버에 요청할 url, 필수요소</li>
+        <li>data : 전송할 데이터로 문자열 또는 객체로 기술한다. 선택요소[필수아님]</li>
+        <li>success : 서버가 처리한 요청이 성공하면 function(data){성공하면 실행할 코드}
+            콜백함수가 실행된다. 매개변수 data는 처리 결과를 반환 받는다.
+            이 처리에 따라 작업 수행이 필요한 경우 사용한다.
+        </li>
+    </ul>
+    <h3>$.ajax() 메소드 실습(p499~503)</h3>
+    <p>javascript로 서버를 생성하고 동일한 방식으로 HTTP 요청, 응답 처리를 실습합니다.</p>
+    <p>교재 p500, process.jsp 등은 java 수업 진도에 맞춰서 실습할 예정</p>
+    <button type="button" id="pro">결과</button>
+    <form action="/login.jsp" method="post" id="loginForm" name="loginForm">
+        <label for="id">아이디</label>
+        <input type="text" id="id" name="id">
+        <label for="passwd">비밀번호</label>
+        <input type="password" id="passwd" name="passwd">
+        <button type="submit" id="pro">로그인</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        $(function(){
+            var query =  {
+                //id: "admin",
+                id: $("#id").val(),
+                //pw: admin1004
+                pw: $("#passwd").val()
+            }
+            //$("#pro").click(function(){
+            $("#loginForm").on("submit",function(e){
+                e.preventDefault(); // 페이지 새로고침 금지
+                $.ajax({
+                    type: "POST",
+                    //url : "서버URL(서버관리자가 알려준 통신용 주소)",
+                    //url: "loginPro.jsp", // java servlet page : 서블릿 jsp
+                    url: "data/MOCK_DATA.json",
+                    data: query,
+                    success: function(data){
+                        if(data==1){
+                            alert("로그인 성공! 메인페이지로 이동합니다.");
+                            location.href="/"
+                        }else if(data==0){  // 비밀번호 틀리
+                            alert("아이디 또는 비밀번호를 다시 확인하세요.");
+                            $("#id").focus();
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>
