@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function_test1</title>
+    <script>
+        function chColor(){
+            var arrColor = ["#ff0", "#6c0", "#fcf", "#cf0", "#39f"];
+            var arrNum = Math.floor(Math.random() * arrColor.length);
+            var bodyTag = document.getElementById("theBody");
+            bodyTag.style.backgroundColor = arrColor[arrNum];
+        }
+    </script>
+    <style>
+        p { margin: 0.3rem }
+    </style>
+</head>
+<body>
+    <body id="theBody">
+        <button onclick="chColor();">배경 색상 바꾸기</button>
+        <hr>
+        <div>
+            <ul>
+                <li>
+                    <p><strong>Math.floor(숫자)</strong> : 소수점 첫째 자리에서 무조건 <strong>내림</strong>하여 정수를 반환한다.</p>
+                </li>
+                <li>
+                    <p><strong>Math.random()</strong> : 0 ~ 1 사이의 난수를 반환한다.</p>
+                </li>
+                <li>
+                    <p><strong>getElementById()</strong> : id값을 이용해 문서 객체(태그)를 선택하는 메서드</p>
+                    <p>
+                        ex) document.getElementById("theBody").style.backgroundColor = "yellow";<br>
+                        문서객체.style.스타일속성 = 새 값;
+                    </p>
+                </li>
+            </ul>
+            
+        </div>
+    </body>
+</body>
+</html>
