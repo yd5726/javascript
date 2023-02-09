@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_li_mouseover</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { padding:20px; }
+        li { list-style:none; }
+        a { text-decoration: none; color: #000; }
+        .gnb { width:400px; text-align: center; overflow: hidden; }
+        .gnb li { width:25%; float: left; padding:5px; }
+        .gnb li a { border: 1px solid #000; display: block; padding:5px 0; }
+        .snb { width:400px; overflow: hidden; }
+        .snb li { float: left; padding:5px; }
+        .snb li a:hover{ background-color:blueviolet; color: white; }
+        h5 a:hover{ background-color:blue; color: white; }
+    </style>
+    <script src="lib/jquery-3.6.1.js"></script>
+    <script>
+        $(function(){
+            $(".gnb li a:not(:first)").css("color","blue");
+            var beforeMenu = null;
+            $(".gnb > li > a").on("mouseover focus", function() {
+                if(beforeMenu) beforeMenu.css({background:"none"});
+                $(this).css({"background-color":"#0ff"});
+                beforeMenu = $(this);
+            });
+            $(".gnb").on("mouseleave", function() {
+                if(beforeMenu) beforeMenu.css({background:"#ddf542"});
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul class="gnb">
+		<li><a href="#">menu1</a></li>
+		<li><a href="#">menu2</a></li>
+		<li><a href="#">menu3</a></li>
+		<li><a href="#">menu4</a></li>
+	</ul>
+    <ul class="snb">
+		<li><a href="#">menu1</a></li>
+		<li><a href="#">menu2</a></li>
+		<li><a href="#">menu3</a></li>
+		<li><a href="#">menu4</a></li>
+	</ul>
+    <h5><a href="http://api.jquery.com/hover/" target="_blank">"hover"</a>는 mouseenter와 mouseleave를 묶은 것이다.</h5>
+</body>
+</html>
