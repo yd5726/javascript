@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_animate</title>
+    <script src="lib/jquery-3.6.1.js"></script>
+    <script>
+        $(function() {
+          $("#btn1").on("click",function(){
+            $("h1").fadeOut(1000);
+          });
+          $("#btn2").on("click",function(){
+            $("#ctx").animate({marginLeft:"+=50px"},500)
+          });
+        });
+        $(function() {
+	        var txt1 = $(".txt1");
+	        var count = 1;
+            $(".btnWrap button").on("click", function() {
+                if(!txt1.is(":animated")) {
+                    if($(this).hasClass("backBtn")) {
+                        count--;
+                        if(count < 1) {
+                            count = 1;
+                            return false;
+                        } 
+                        txt1.animate({marginLeft:"-=10%"},300);
+                    } else {
+                        count++;
+                        if(count > 10) {
+                            count = 10;
+                            return false;
+                        }             
+                        txt1.animate({marginLeft:"+=10%"},300);
+                    }
+                }
+            });
+
+            $(".txt2")
+	            .animate({marginLeft:"100px"},1000)
+	            .animate({marginLeft:"300px"},1000)
+	            .animate({marginLeft:"400px"},1000);
+	        $(".txt2").clearQueue();
+
+            $(".txt3")
+	            .animate({marginLeft:"200px"},1000)
+	            .animate({marginTop:"200px"},1000)
+	        .queue(function() {
+    			$(this).css({background:"red"});
+			    $(this).dequeue();
+	        })
+	        .animate({marginLeft:0},1000)
+	        .animate({marginTop:0},1000);
+
+            $(".txt4").delay(3000)
+	            .animate({marginLeft:"300px"},1000);
+
+            $(".btn5").on("click", function( ) {
+		        $(".txt5").animate({
+			        marginLeft:"500px",
+			        fontSize:"30px"
+		        },
+		        2000, "linear", function( ) {
+			        alert("linear : 일정한 속도로 움직인다."); 
+		        });
+	        });
+        });
+    </script>
+</head>
+<body>
+    <button id="btn1">fadeOut</button>
+    <h1>fadeOut_display: none</h1>
+    <button id="btn2">move</button>
+    <p id="ctx">move</p>
+
+    <p class="btnWrap">
+		<button class="backBtn">Back</button>
+		<button class="goBtn">Go</button>
+	</p>
+	<div class="wrap">
+		<p class="txt1">back_go</p>
+        <p class="txt2">내용2</p>
+        <p class="txt3" style="width: 50px;">내용3</p>
+        <h5>clearQueue()를 실행하면 현재 진행 중인 애니메이션을 제외하고 대기 중인 애니메이션은 모두 제거된다.</h5>
+        <p class="txt4">내용4</p>
+        <p><button class="btn5">btn5</button></p>
+	<span class="txt5">이동하고 폰트 키우기</span>
+	</div>
+</body>
+</html>
