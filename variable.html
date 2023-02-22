@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascript variable</title>
+    <style>
+        ul { list-style: none; }
+        ul > li {
+            width: 200px;
+            padding: 10px 20px;
+            border: 1px solid #000;
+        }
+        div, h4 { 
+            width: 400px;
+            margin: 10px 20px;
+        }
+        div > h3 { 
+            margin: 0 0 5px 0;
+            border-bottom: 1px dotted #000;
+        }
+        .p_div { 
+            width: 400px;
+            margin: 0;
+            margin-top: 10px;
+        }
+        .p_div > p {
+            background-color: #d2d2d2;
+            padding: 5px 10px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>javascript</li>
+        <li>java</li>
+        <li>python</li>
+        <li>django</li>
+    </ul>
+    <ol>
+        <li>const를 기본으로 사용한다.</li>
+        <li>그런데 변경이 될 수 있는 변수는 let을 사용한다.</li>
+        <li>var는 사용하지 않는다.</li>
+    </ol>
+    <div>
+        <h3>const는 재할당은 안되지만</h3>
+        <h3>이렇게 const로 배열이나</h3>
+        <h3>object 값을 추가하거나 삭제하는 것</h3>
+        <h3>즉 변경하는 것은 가능하다.</h3>
+        <div class="p_div">
+            <p>const const_array = ["apple", "orange","watermelon"];</p>
+            <p>const_array.push("banana");</p>
+            <p>console.log(const_array);</p>
+            <p>//['apple', 'orange', 'watermelon', 'banana']</p>
+        </div>
+    </div>
+    <div>
+        <strong>immutable array(수정이 가능한 배열)</strong>
+        <p>
+            concat() 함수는
+            파라미터로 받은 배열이나 값들을 기존의 배열에 합쳐서,
+            새로운 배열을 만들어서 리턴한다.
+        </p>
+        <div class="p_div">
+            <p>const immutable1 = ['ab','bc'];</p>
+            <p>immutable2 = [].concat(immutable1, "cd");</p>
+            <p>console.log(immutable1); //['ab', 'bc']</p>
+            <p>console.log(immutable2); //['ab', 'bc', 'cd']</p>
+            <p>console.log(immutable1 === immutable2); //false</p>
+        </div>
+    </div>
+    <script>
+        var list = document.querySelectorAll("ul > li");
+        for(var i=0; i<list.length; i++){
+            list[i].addEventListener("click", function(){
+                console.log("var i = " + i + "번째 리스트 입니다."); //4번째 리스트 입니다.
+            });
+        }
+        for(let i=0; i<list.length; i++){
+            list[i].addEventListener("click", function(){
+                console.log("let i = " + i + "번째 리스트 입니다."); //0,1,2,3번째 리스트 입니다.
+            });
+        }
+        function const_test(){
+            const const_array = ["apple", "orange","watermelon"];
+            const_array.push("banana");
+            console.log(const_array);
+        }
+        const_test();
+        function immutable_array(){
+            const immutable = ["a","b","c"];
+            immutable.push("d");
+            console.log(immutable);
+        }
+        immutable_array();
+        const immutable1 = ['ab','bc'];
+        immutable2 = [].concat(immutable1, "cd");
+        console.log(immutable1); //['ab', 'bc']
+        console.log(immutable2); //['ab', 'bc', 'cd']
+        console.log(immutable1 === immutable2); //false
+    </script>
+</body>
+</html>
