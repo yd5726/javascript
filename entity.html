@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>entity</title>
+    <script>
+        console.log("object literal");
+        const name = "crong";
+        const age = 33;
+        const obj = {
+            name : name,
+            age : age
+        };
+        console.log(obj); //{name: 'crong', age: 33} [[Prototype]]:Object
+        
+        function getObj2(){
+            const name = "kim";
+            const getName = function () {
+                return name;
+            }
+            const setName = function(newname){
+                name = newname;
+            }
+            const printName = function(){
+                console.log(name);
+            }
+            return {
+                getName : getName,
+                setName : setName
+            }
+        }
+        var obj2 = getObj2();
+        console.log(obj2); // { getName: f (), setName: f (newname) } [[Prototype]]:Object
+        console.log(obj2.getName()); //kim
+
+        function getObj3(){
+            const name = "moon";
+            const getName = function () {
+                return name;
+            }
+            const setName = function(newname){
+                name = newname;
+            }
+            const printName = function(){
+                console.log(name);
+            }
+            return { getName,setName }
+        }
+        var obj3 = getObj3();
+        console.log(obj3); // { getName: f (), setName: f (newname) } [[Prototype]]:Object
+        console.log(obj3.getName()); //moon
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
