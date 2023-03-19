@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>func_default_param</title>
+    <script>
+        function sum(value,size){
+            return value + size;
+        }
+        console.log(sum(3,10)); //13
+        console.log(sum(3)); //NaN
+
+        function mul(value,size){
+            size = size || 1;
+            return value * size;
+        }
+        console.log(mul(4)); //4
+        function div(value,size=2){
+            return value / size;
+        }
+        console.log(div(20)); //10
+        console.log(div(20,4)); //5
+
+        function obj(v,s={v:1}){
+            return v + s.v;
+        }
+        console.log(obj(6,{v:3})); //9
+        console.log(obj(6)); //7
+        console.log(obj(6,{v:0})); //6
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
