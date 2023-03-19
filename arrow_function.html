@@ -16,9 +16,109 @@
             return a*b;
         }
         console.log(multiply(10,20));   // 200
+
+        // 콜백 함수
+        setTimeout(function(){
+            console.log('1초 뒤에 setTimeout()');
+        }, 1000);
+
+        setTimeout(()=>{
+            console.log('3초 뒤에 setTimeout()');
+        }, 3000);
+
+        // 화살표 함수
+        let newArr1 = [1,2,3,4,5].map(function(value){
+            return value * 2;
+        });
+        console.log(newArr1); //[2, 4, 6, 8, 10]
+        
+        let newArr2 = [1,2,3,4,5].map((v)=>{
+            return v * 5;
+        });
+        console.log(newArr2); //[5, 10, 15, 20, 25]
+
+        let newArr3 = [1,2,3,4,5].map((v)=>(v*10));
+        console.log(newArr3); //[10, 20, 30, 40, 50]
+
+        // this context of Arrow function
+        const myObj = {
+            runTimeout(){
+                setTimeout(function(){
+                    console.log(this === window);
+                }, 200);
+            }
+        };
+        myObj.runTimeout(); //true
+
+        const myObj2 = {
+            runTimeout(){
+                setTimeout(function(){
+                    this.printData();
+                }.bind(this), 500);
+            },
+            printData(){
+                console.log("hi codesquad!");
+            }
+        };
+        myObj2.runTimeout(); //hi codesquad!
+
+        const myObj3 = {
+            runTimeout(){
+                setTimeout(()=>{
+                    console.log(this === window);
+                    this.printData();
+                }, 1000);
+            },
+            printData(){
+                console.log("hi there!!");
+            }
+        };                   //false
+        myObj3.runTimeout(); //hi there!!
     </script>
 </head>
 <body>
-    
+    <p>mydiv</p>
+    <script>
+        const el = document.querySelector("p");
+        el.addEventListener("click", function(){
+            console.log(this); //<p>mydiv</p>
+        });
+
+        const myObject = {
+            register(){
+                el.addEventListener("click", function(){
+                    this.printData();
+                });
+            },
+            printData(){
+                console.log('myObject clicked!!');
+            }
+        };                    // Uncaught TypeError: this.printData is not a function
+        myObject.register();  // at HTMLParagraphElement.<anonymous>
+        
+        const myObject2 = {
+            register(){
+                el.addEventListener("click", function(){
+                    this.printData();
+                }.bind(this));
+            },
+            printData(){
+                console.log('myObject2 clicked!!');
+            }
+        }; 
+        myObject2.register(); //myObject2 clicked!!
+
+        const myObject3 = {
+            register(){
+                el.addEventListener("click", (evt)=>{
+                    this.printData(evt.target);
+                });
+            },
+            printData(el){
+                console.log('myObject3 clicked!!',el.innerText);
+            }
+        };
+        myObject3.register(); //myObject3 clicked!! mydiv
+    </script>
 </body>
 </html>
