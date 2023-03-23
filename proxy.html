@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>proxy</title>
+    <script>
+        console.log('=======(1)=======');
+        const myObj = {name:'crong'};
+        const proxy = new Proxy(myObj, {});
+        console.log(proxy.name);           //crong
+        console.log(myObj);                //{name: 'crong'}
+        console.log(proxy);                //Proxy(Object) {name: 'crong'}
+
+        proxy.name = "jisu";
+        console.log(proxy.name);           //jisu
+        console.log(toString.call(proxy)); //[object Object]
+        console.log(proxy);                //Proxy(Object) {name: 'jisu'}
+        console.log(myObj);                //{name: 'jisu'}
+
+        console.log(proxy === myObj);           //false
+        console.log(proxy.name === myObj.name); //true
+
+        console.log('=======(2)=======');
+        const myChange = {name:'lisa'};
+        const myProxy = new Proxy(myChange, {
+            get : function(target, property, receiver){ //target은 myChange, receiver는 myProxy
+                console.log('get value');
+                return target[property];
+            },
+            set : function(target, property, value){    //value 새로 지정한 값 대입
+                console.log('set value');
+                target[property] = value;
+            }
+        });
+        console.log(myProxy.name); //get value
+                                   //lisa
+        myProxy.name = "jennie";   //set value
+        console.log(myProxy.name); //get value
+                                   //jennie
+
+        console.log('=======(3)=======');
+        const finObj = {name :'solar', changedValue : 0}; //changedValue : 데이터 로깅을 위해 default 값 0을 줌
+        const finProxy = new Proxy(finObj, {
+            get : function(target, property, receiver){ //target은 finObj, receiver는 finProxy
+                console.log('get value');
+                return target[property];
+            },
+            set : function(target, property, value){    //value 새로 지정한 값 대입
+                console.log('set value');
+                target['changedValue']++;
+                target[property] = value;
+            }
+        });
+        console.log(finProxy.name); //get value
+                                    //solar
+        finProxy.name = 'moonbyul'; //set value
+        console.log(finProxy.name); //get value
+                                    //moonbyul
+        finProxy.name = 'hwasa';    //set value                         
+        console.log(finProxy.name); //get value
+                                    //hwasa
+
+        console.log(finObj);                //{name: 'hwasa', changedValue: 2}
+        console.log(finProxy.changedValue); //get value
+                                            //2
+        finObj.name = "wheein";
+        console.log(finObj.name);           //wheein
+        console.log(finProxy);              //Proxy(Object) {name: 'wheein', changedValue: 2}
+        console.log(finObj);                //{name: 'wheein', changedValue: 2}
+
+        finProxy.name ="startup campus";    //set value
+        console.log(finObj);                //{name: 'startup campus', changedValue: 3}
+
+        const newProxy = new Proxy({name :'newProxy', changedValue : 0}, {
+            get : function(target, property, receiver){
+                console.log('get value');
+                return target[property];
+            },
+            set : function(target, property, value){
+                console.log('set value');
+                target['changedValue']++;
+                target[property] = value;
+            }
+        });
+        newProxy.name ="codesquad";         //set value 
+        console.log(newProxy.changedValue); //get value
+                                            //1
+        newProxy.name ="codesquad2";        //set value 
+        console.log(newProxy.changedValue); //get value
+                                            //2
+
+        console.log('=======(4)=======');
+        const interception = new Proxy({name :'interception', changedValue : 0}, {
+            get : function(target, property, receiver){
+                return Reflect.get(target, property);
+            },
+            set : function(target, property, value){
+                console.log('set value');
+                target['changedValue']++;
+                target[property] = value;
+            }
+        });
+        interception.name = "code";             //set value 
+        interception.name = "code2";            //set value 
+        console.log(interception.changedValue); //2
+        console.log(interception.name);         //code2
+
+        console.log('=======(5)=======');
+        const propro = new Proxy({name :'propro', changedValue : 0}, {
+            get : function(target, property, receiver){
+                return (property in target) ? target[property] : "anonymous";
+            },
+            set : function(target, property, value){
+                console.log('set value');
+                target['changedValue']++;
+                target[property] = value;
+            }
+        });
+        console.log(propro.name);  //propro
+        console.log(propro.age);  //anonymous
+    </script>
+</head>
+<body>
+    <h3>proxy</h3>
+    <p>객체의 변화 또는 접근을 중간에서 가로채서</p>
+    <p>get이나 set으로 추가적인 작업을 할 수 있다.</p>
+</body>
+</html>
