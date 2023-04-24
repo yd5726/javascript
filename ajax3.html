@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax3</title>
+    <script>
+        var req = new XMLHttpRequest();
+        req.open("GET","../data/xml-data.xml");
+        req.send(); //4
+    </script>
+    <script>
+        var pi = 3.14;
+        var str ="string";
+        var json_pi = JSON.stringify(pi);
+        console.log(json_pi);
+        var json_str = JSON.stringify(str);
+        console.log(json_str);
+
+        var j = JSON.parse("3.14");
+        console.log(j);
+        var arr = ["문자열", 3, true];
+        var arrt = JSON.stringify(arr);
+        console.log(arr);
+        console.log(arrt);
+    </script>
+    <script>
+        var req2 = new XMLHttpRequest();
+        req2.onreadystatechange = function a(){
+            console.log(this.readyState, this.status);
+            if(this.readyState == 4){
+                console.log(this.response);
+                var data = JSON.parse(this.response);
+                for(var i in data){
+                    var t = document.getElementById("template").cloneNode(true);
+                    t.removeAttribute("id");
+                    t.children[0].innerText = data[i].id;
+                    t.children[1].innerText = data[i].last_name;
+                    t.children[2].innerText = data[i].email;
+                    document.body.appendChild(t);
+                }
+            }
+        };
+        req2.open("GET", "../data/MOCK_DATA.json");
+        req2.send();
+    </script>
+</head>
+<body>
+    ajax3
+    <!--
+        req.readyState;
+        0: open 메소드 호출 전
+        1: open 메소드 호출 후
+        2: 보낸 요청에 대해 응답에 헤더가 수신된 후
+        3: 응답 메세지에 바디 부분이 수신중 일 때
+        4: 모든 응답이 완료 되었을 때
+     -->
+     <p id="template">
+        <span>번호</span>
+        : 
+        <span>이름</span>
+        _
+        <span>이메일</span>
+     </p>
+</body>
+</html>
