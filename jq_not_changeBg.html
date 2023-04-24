@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="lib/jquery-3.6.1.js"></script>
+    <title>jq_not_select</title>
+    <script>
+        $(function(){
+            $("#myList li").not(":first").css("background-color","yellow");
+        });
+        $(function(){
+	    $("#myList li").eq(2).css("background-color","pink");
+        });
+    </script>
+    <style>
+        li:hover{
+            color:red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <ul id="myList">
+		<li>[0] white</li>
+		<li>[1] yellow</li>
+		<li>[2] pink</li>
+		<li>[3] yellow</li>
+	</ul>  
+</body>
+</html>

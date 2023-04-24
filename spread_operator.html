@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spread_operator</title>
+    <script>
+        console.log("spread operator : 펼침 연산자");
+        let pre = ["apple","orange",100];
+        let newDate = [...pre];
+        console.log(pre, newDate);
+        /*
+            ['apple', 'orange', 100] 
+            ['apple', 'orange', 100]
+        */
+        console.log(pre === newDate); // false
+        console.log("기존의 참조를 끊고, 메모리의 새로운 공간에 새로운 배열로 들어간 것이다.");
+        console.log("pre와 newDate는 서로 같은 참조를 유지하지 않는다.");
+        console.log("완전히 복사한 것이다.");
+        console.log("Array.prototype.concat()을 이용해서 배열을 합칠 경우에");
+        console.log("새로운 배열을 복사해서 반환하는데 그것과 똑같다.");
+        console.log("--------------------------");
+        let arr = [100,200,"hello",null];
+        let newArr = [0,1,2,3,...arr,4];
+        console.log(arr); //[100, 200, 'hello', null]
+        console.log(newArr); //[0, 1, 2, 3, 100, 200, 'hello', null, 4]
+        console.log("장점1) 특정 배열 안에 배열을 쉽게 끼워 넣을 수 있다.");
+        console.log("--------------------------");
+        console.log("장점2) 개별 파라메타로 값을 전달하기 쉽다.");
+        function sum(a,b,c){
+            return a+b+c;
+        }
+        let sumArr = [100,200,300];
+        console.log("Function.prototype.apply()");
+        console.log("apply() : 배열 그대로를 전달해주고싶을 때 사용한다.");
+        console.log(sum.apply(null,sumArr)); //600
+        console.log("--------------------------");
+        console.log(sum(...sumArr)); //600
+        console.log(sum(100,200,300)); //600
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

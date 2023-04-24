@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map_WeakMap</title>
+    <script>
+        console.log('=== WeakMap ===');
+        let wm = new WeakMap();
+        let myfun = function(){};
+
+        // Q. 이 함수가 얼마나 실행됐는지를 알려고 할 때
+        wm.set(myfun,0);
+        console.log(wm); //WeackMap {f => 0}
+
+        let count = 0;
+        for(let i=0; i<10; i++){
+            count = wm.get(myfun); // get value
+            count++;
+            wm.set(myfun,count);
+        }
+        console.log(wm); //WeakMap {ƒ => 10}
+        console.log(wm.get(myfun)); //10
+
+        myfun = null;
+        console.log(wm.get(myfun)); //undefined
+        console.log(wm.has(myfun)); //false
+
+        console.log('=== WeakMap 활용 ===');
+        function Area(height,width){
+            this.height = height;
+            this.width = width;
+        }
+        Area.prototype.getArea = function(){
+            return this.height * this.width;
+        }
+        let myarea = new Area(10,20);
+        console.log(myarea.getArea()); //200
+        console.log(myarea.height); //10
+        console.log(myarea.width); //20
+
+        // Q. 접근을 효율적으로 막기 위해 WeackMap 활용해서 인스턴스 관리
+        // private 변수 만드는 방법
+        const wmap = new WeakMap(); // 전역 공간에 두기
+        function WArea(h,w){
+            wmap.set(this,{h,w}); // 현 객체에 추가 정보 담기
+        }
+        WArea.prototype.getHW = function(){
+            const {h,w} = wmap.get(this); // destructuring
+            return h * w;
+        }
+        let my = new WArea(10,20);
+        console.log(my.getHW()); //200
+        console.log(my.h); //undefined, 접근이 안 됨
+
+        console.log(wmap.has(my)); //true
+        console.log(wmap.get(my)); //{h: 10, w: 20}
+        my = null; // 인스턴스 삭제
+        console.log(wmap); //WeakMap {WArea => Object{h:1 0,w: 20}}
+        console.log(wmap.has(my)); //false
+        console.log(wmap.get(myarea)); //undefined
+
+        console.log('=== WeakMap 사용 안 할 경우 ===');
+        const obj = {};
+        function putObj(he,wi){
+            //obj["he"] = he;
+            //obj["wi"] = wi;
+            obj.he = he;
+            obj.wi = wi;
+        }
+        putObj.prototype.getA = function(){
+            return obj.he * obj.wi;
+        }
+        let mine = new putObj(10,20);
+        console.log(mine.getA()); //200
+        
+        console.log(obj); //{he: 10, wi: 20}
+        mine = null;
+        console.log(obj); //{he: 10, wi: 20}
+    </script>
+</head>
+<body>
+    <h3>자바스크립트에서 자료 처리</h3>
+    <ul>
+        <li>Array =개선=> Set, WeakSet</li>
+        <li>Object =개선=> Map, WeakMap</li>
+    </ul>
+</body>
+</html>

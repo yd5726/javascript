@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set_WeakSet</title>
+    <script>
+        console.log("=== Set ===");
+        let mySet = new Set();
+        console.log(toString.call(mySet)); //[object Set]
+
+        mySet.add("crong");
+        mySet.add("hary");
+        mySet.add("crong");
+        mySet.forEach(function(v){  //crong
+            console.log(v);         //hary
+        });
+
+        console.log(mySet.has("crong")); //true
+
+        mySet.delete("crong");
+        mySet.forEach(function(v){  
+            console.log(v);         //hary
+        });
+
+        console.log("=== WeakSet ===");
+        let arr = [1,2,3,4];
+        let ws = new WeakSet();
+        ws.add(arr);
+        console.log(ws); //WeakSet {Array(4)}
+        
+        // ERROR : Invalid value used in weak set
+        //ws.add(111);
+        //ws.add("222");
+        //ws.add(null);
+        //console.log(ws);
+
+        ws.add(function(){});
+        console.log(ws); //WeakSet {Array(4), ƒ}
+
+        let arr2 = [5,6,7,8];
+        let obj = {arr,arr2};
+        let weakset = new WeakSet();
+
+        weakset.add(arr);
+        weakset.add(arr2);
+        weakset.add(obj);
+        console.log(weakset); //WeakSet {Array(4), Array(4), Object{arr: Array(4), arr2: Array(4)}}
+        console.log(weakset.has(arr), weakset.has(arr2)); //true true
+
+        arr = null;
+        console.log(weakset); //WeakSet {Array(4), Array(4), Object{arr: Array(4), arr2: Array(4)}}
+        console.log(weakset.has(arr), weakset.has(arr2)); //false true
+    </script>
+</head>
+<body>
+    <h1>Set</h1>
+    <ul>
+        <li>Set 객체는 중복되지 않는 유일한 값들의 집합</li>
+        <li>Set은 수학적 집합을 표현한 자료구조</li>
+    </ul>
+    <p>중복 없이 유일한 값을 저장하려고 할 때</p>
+    <p>이미 존재하는지 체크할 때 유용</p>
+    <h1>WeakSet</h1>
+    <p>참조를 가지고 있는 객체만 저장이 가능하다.</p>
+    <p>객체 형태를 중복 없이 저장하려고 할 때 유용하다.</p>
+</body>
+</html>

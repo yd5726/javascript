@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>destructuring</title>
+    <script>
+        console.log('=== 배열 ===');
+        let data = ["crong", "honux", "jk", "jinny"];
+        let jisu = data[0];
+        let jung = data[2];
+        console.log(jisu); //crong
+        console.log(jung); //jk
+
+        let [name1,,name2] = data;
+        console.log(name1,name2); //crong jk
+
+        console.log('=== 객체 ===');
+        let obj = {
+            name : "Kim",
+            address : "Korea",
+            age : 25
+        }
+
+        let {name, age} = obj;
+        console.log(name,age); //Kim 25
+
+        let {name:myName, age:myAge} = obj;
+        console.log(myName,myAge); //Kim 25
+
+        console.log('=== JSON 파싱 ===');
+        var news = [
+            {
+                "title" : "sbs",
+                "imgurl" : "http://static.naver.net/newsstand/2017/0313/article_img/9054/173200/",
+                "newslist" : [
+                    "[가보니] 가상 경주도 즐기고, 내 손으로 자동차도 만들고",
+                    "리캡차'가 사라진다",
+                    "갤럭시S8' 출시? '갤노트7' 처리 계획부터 밝혀야",
+                    "블로코-삼성SDS, 블록체인 사업 '맞손",
+                    "[블록체인 톺아보기] 퍼블릭 블록체인의 한계와 프라이빗 블록체인"
+                ]
+            },{
+                "title" : "mbc",
+                "imgurl" : "http://static.naver.net/newsstand/2017/0313/article_img/9022/220451/",
+                "newslist": [
+                    "Lorem ipsum dolor sit amet, consectetur adipisicin",
+                    "ipsum dolor sit amet, consectetur adipisicin",
+                    "dolor sit amet, consectetur adipisicin",
+                    "amet, consectur adipisicin"
+                ]
+            }
+        ];
+
+        let [,mbc] = news;
+        console.log(mbc); //{title: 'mbc', imgurl: 'http://static.naver.net/newsstand/2017/0313/article_img/9022/220451/', newslist: Array(4)}
+
+        //let {title,imgurl} = mbc;
+        //console.log(title,imgurl); //mbc http://static.naver.net/newsstand/2017/0313/article_img/9022/220451/
+
+        let [,{title,imgurl}] = news;
+        console.log(imgurl); //http://static.naver.net/newsstand/2017/0313/article_img/9022/220451/
+
+        console.log('=== function 활용1 ===');
+        function getNewsList(newslist){
+            console.log(newslist);
+        }
+        getNewsList(mbc); //{title: 'mbc', imgurl: 'http://static.naver.net/newsstand/2017/0313/article_img/9022/220451/', newslist: Array(4)}
+
+        console.log('=== function 활용2 ===');
+        function getList1([,{newslist}]){
+            console.log(newslist);
+        }
+        getList1(news); //(4) ['Lorem ipsum dolor sit amet, consectetur adipisicin', 'ipsum dolor sit amet, consectetur adipisicin', 'dolor sit amet, consectetur adipisicin', 'amet, consectur adipisicin']
+
+        function getList2([{newslist}]){
+            console.log(newslist);
+        }
+        getList2(news); // (5) ['[가보니] 가상 경주도 즐기고, 내 손으로 자동차도 만들고', "리캡차'가 사라진다", "갤럭시S8' 출시? '갤노트7' 처리 계획부터 밝혀야", "블로코-삼성SDS, 블록체인 사업 '맞손", '[블록체인 톺아보기] 퍼블릭 블록체인의 한계와 프라이빗 블록체인']
+    </script>
+</head>
+<body>
+    <h1>Destructuring</h1>
+    <p>구조화된 배열 또는 객체를 Destructuring(비구조화, 파괴)하여 개별적인 변수에 할당하는 것이다.</p>
+    <p>배열 또는 객체 리터럴에서 필요한 값만을 추출하여 변수에 할당하거나 반환할 때 유용하다.</p>
+</body>
+</html>

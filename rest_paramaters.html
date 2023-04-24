@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rest_paramaters</title>
+    <script>
+        const result = checkNum(10,1,2,3,"50");
+        function checkNum(){
+            const argArray = Array.prototype.slice.call(arguments);
+            console.log(argArray); //[10, 1, 2, 3, '50']
+        }
+
+        const res = check(30,20,10,"90");
+        const res2 = ch(80,30,70);
+        function check(){
+            const argArr = Array.prototype.slice.call(arguments);
+            console.log(toString.call(argArr)); //[object Array]
+            console.log(toString.call(arguments)); //[object Arguments]
+
+            const res = argArr.every((v)=>typeof v === "number");
+            console.log(res); //false
+        }
+        function ch(){
+            const argArr = Array.prototype.slice.call(arguments);
+            const res2 = argArr.every((v)=>typeof v === "number");
+            console.log(res2); //true
+        }
+
+        console.log('===rest_paramaters===');
+        const res3 = restParam(9,8,7,false);
+        function restParam(...argArray){
+            console.log(toString.call(argArray)); //[object Array]
+            const rest = argArray.every((v)=>typeof v === "number");
+            console.log(rest); //false
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

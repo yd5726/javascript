@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>jq_change_email</title>  
+<script src="lib/jquery-3.6.1.js"></script>
+<script>
+$(function(){
+	$("#email_select").on("change", function(){
+		$("#email2").val($(this).val());
+		if($("#email_select").has('option').length > 0){
+			$("#email2").attr("readonly", true);
+		}
+		if($(this).val() == '1'){
+			$("#email2").val('');
+			$("#email2").removeAttr("readonly");
+		}
+	});
+});
+</script>
+</head>
+<body>
+<label>이메일</label>
+<input type="text" id="email1">@<input type="text" id="email2">
+<select id="email_select">
+	<option value="1">직접입력</option>
+	<option value="gmail.com">gmail.com</option>
+	<option value="naver.com">naver.com</option>
+</select>
+</body>
+</html>

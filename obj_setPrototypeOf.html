@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>obj_setPrototypeOf</title>
+    <script>
+        // Object.assign()
+        const healthObj = {
+            showHealth : function(){
+                console.log("오늘 운동시간 : "+this.healthTime);
+            }
+        };
+        const myHealth = Object.assign(Object.create(healthObj),{
+            name : "crong",
+            lastTime : "4:44"
+        });
+        console.log("myHealth is ",myHealth); // myHealth is  {name: 'crong', lastTime: '4:44'}
+                                              // [[Prototype]] : Object
+                                              // showHealth : ƒ ()                              
+        // Object.setPrototypeOf()
+        const hObj = {
+            showHealth : function(){
+                console.log("오늘 운동시간 : "+this.healthTime);
+            },
+            setHealth : function(newtime){
+                this.healthTime = newtime;
+            }
+        }
+        const myH = {
+            name : "mori",
+            lastTime : "2:30"
+        };
+        Object.setPrototypeOf(myH,hObj);
+        console.log("myH is ",myH); // myH is  {name: 'mori', lastTime: '2:30'}
+                                    // [[Prototype]] : Object
+                                    // setHealth : ƒ (newtime)
+                                    // showHealth : ƒ ()
+
+        const newObj = Object.setPrototypeOf({
+            name : "naru",
+            lastTime : "7:23"
+        }, hObj);
+
+        console.log(newObj); // {name: 'naru', lastTime: '7:23'}
+                             // [[Prototype]] : Object
+                             // setHealth : ƒ (newtime)
+                             // showHealth : ƒ ()
+
+        // Object.setPrototypeOf()로 객체간 prototype chain 생성하기
+        // parent : hObj
+        // child : hChildObj
+        const hChildObj = {
+            getAge : function(){
+                return this.age;
+            }
+        }
+        Object.setPrototypeOf(hChildObj,hObj);
+        hChildObj.setHealth("3:58");
+        hChildObj.showHealth(); // 오늘 운동시간 : 3:58
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
